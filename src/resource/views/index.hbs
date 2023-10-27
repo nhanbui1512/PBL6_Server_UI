@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+      
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link href="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" />
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.6.0/css/autoFill.dataTables.min.css" />
+    <link href="https://cdn.datatables.net/autofill/2.6.0/js/dataTables.autoFill.min.js" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+    <link href="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    
+</head>
+<body>
+
+     <table id="myTable" class="display">
+        <thead>
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+
+    <script>
+    var data =  [
+    {
+        "name":       "Tiger Nixon",
+        "position":   "System Architect",
+        "salary":     "$3,120",
+        "start_date": "2011/04/25",
+        "office":     "Edinburgh",
+        "extn":       "5421"
+    },
+    {
+        "name":       "Garrett Winters",
+        "position":   "Director",
+        "salary":     "$5,300",
+        "start_date": "2011/07/25",
+        "office":     "Edinburgh",
+        "extn":       "8422"
+    }
+]
+
+
+    let table = new DataTable('#myTable', {
+        data: data,
+        columns: [
+            { data: 'name' },
+            { data: 'position' },
+            { data: 'salary' },
+            { data: 'office' }
+        ]
+    });
+    </script>
+
+    <script>
+
+        const webSocket = new WebSocket('ws://localhost:3000');
+
+        webSocket.addEventListener('open', () => {
+            console.log('Connected to server socket')
+        })
+
+        webSocket.addEventListener('message' , (message) => {
+            console.log(message.data)
+        })
+    </script>
+</body>
+
+</html>
