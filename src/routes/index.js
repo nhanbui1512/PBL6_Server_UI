@@ -1,7 +1,7 @@
-const rootRouter = require("./rootRouter");
+const rootRouter = require('./rootRouter');
 
 function route(app) {
-  app.use("/", rootRouter);
+    app.use('/', rootRouter);
 }
 
 module.exports = route;
