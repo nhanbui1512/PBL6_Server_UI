@@ -447,6 +447,37 @@
     <script src="/template/js/gleek.js"></script>
     <script src="/template/js/styleSwitcher.js"></script>
 
+    <script> 
+      const createRow = () => {
+        let body = document.querySelector('tbody')
+      
+        body.innerHTML = `<tr>
+                        <td>1545466932.337732</td>
+                        <td>
+                          6667
+                        </td>
+                        <td>54582</td>
+                        <td>60</td>
+                        <td>S0</td>
+                        <td>S</td>
+                        <td>1</td>
+                        <td>udp</td>
+                        <td>-</td>
+                        <td><span
+                            class="label gradient-2 btn-rounded"
+                          >dDos</span>
+                        </td>
+                      </tr>` + body.innerHTML
+      }
+        // connect to Server 
+        const webSocket = new WebSocket('ws://localhost:3000');
+        webSocket.addEventListener('open', () => { console.log('Connected to server socket') })
+
+        webSocket.addEventListener('message' , (message) => { 
+          console.log(message.data)
+        })
+    </script>
+
   </body>
 
 </html>
