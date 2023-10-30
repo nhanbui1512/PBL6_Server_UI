@@ -1,6 +1,5 @@
 const express = require('express');
 const Websocket = require('ws');
-const server = require('http').createServer(app);
 const path = require('path');
 const hbs = require('express-handlebars');
 
@@ -8,6 +7,7 @@ const routes = require('./routes');
 const sendData = require('./app/controllers/dataController');
 
 const app = express();
+const server = require('http').createServer(app);
 const wss = new Websocket.Server({ server: server });
 
 // data from file csv
