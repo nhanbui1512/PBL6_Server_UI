@@ -40,7 +40,7 @@ async function sendRequestToServer({
 
 const sendData = (ws, data) => {
     let i = 0;
-    setInterval(async () => {
+    return setInterval(async () => {
         try {
             const res = await sendRequestToServer({
                 ts: data[i][1],
@@ -56,7 +56,7 @@ const sendData = (ws, data) => {
             ws.send(JSON.stringify(res)); // send to client UI through websocket
             i++;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }, 2000);
 };

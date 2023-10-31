@@ -17,6 +17,7 @@ var result = [];
 
 // config websocket
 wss.on('connection', (ws, req) => {
+    var intervalID;
     fs.createReadStream('./data_test.csv') // read data from file .csv
         .pipe(parse({ delimiter: ',', from_line: 2 }))
         .on('data', function (row) {
@@ -26,13 +27,21 @@ wss.on('connection', (ws, req) => {
             console.log(error.message);
         })
         .on('end', function () {
-            sendData(ws, result);
+            intervalID = sendData(ws, result);
         });
 
     ws.on('message', (message) => {
         console.log(`received ${message}`);
         ws.send('Got your message its' + message);
     });
+    ws.on('close', () => {
+        console.log('disconnected');
+        clearInterval(intervalID);
+    });
+});
+
+wss.on('close', () => {
+    console.log('disconnected');
 });
 
 // config static files
