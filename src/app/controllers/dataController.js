@@ -5,11 +5,9 @@ async function sendRequestToServer({
     idresp_p,
     idorig_p,
     orig_ip_bytes,
+    resp_ip_bytes,
     conn_state,
     history,
-    orig_pkts,
-    proto,
-    duration,
 }) {
     try {
         const response = await axios.post(
@@ -20,10 +18,8 @@ async function sendRequestToServer({
                 idorig_p: idorig_p,
                 orig_ip_bytes: orig_ip_bytes,
                 conn_state: conn_state,
+                resp_ip_bytes: resp_ip_bytes,
                 history: history,
-                orig_pkts: orig_pkts,
-                proto: proto,
-                duration: duration,
             },
             {
                 headers: {
@@ -47,18 +43,30 @@ const sendData = (ws, data) => {
                 idresp_p: data[i][6],
                 idorig_p: data[i][4],
                 orig_ip_bytes: data[i][18],
-                orig_pkts: data[i][17],
+                resp_ip_bytes: data[i][20],
                 conn_state: data[i][12],
                 history: data[i][16],
-                proto: data[i][7],
-                duration: data[i][9],
             });
-            ws.send(JSON.stringify(res)); // send to client UI through websocket
+
+            ws.send(
+                JSON.stringify({
+                    ts: data[i][1],
+                    idresp_p: data[i][6],
+                    idorig_p: data[i][4],
+                    orig_ip_bytes: data[i][18],
+                    resp_ip_bytes: data[i][20],
+                    conn_state: data[i][12],
+                    history: data[i][16],
+                    proto: data[i][7],
+                    label: res.label,
+                    id_label: res.id_label,
+                }),
+            ); // send to client UI through websocket
             i++;
         } catch (error) {
             console.log(error.message);
         }
-    }, 2000);
+    }, 1000);
 };
 
 module.exports = sendData;

@@ -1,0 +1,43 @@
+{
+    "proto": { "tcp": 1.0, "udp": 2.0, "icmp": 0.0 },
+    "service": {
+        "-": 0.0,
+        "http": 3.0,
+        "dns": 2.0,
+        "irc": 4.0,
+        "ssh": 5.0,
+        "ssl": 6.0,
+        "dhcp": 1.0
+    },
+    "conn_state": {
+        "S0": 6.0,
+        "RSTOS0": 3.0,
+        "REJ": 1.0,
+        "OTH": 0.0,
+        "RSTR": 4.0,
+        "SF": 10.0,
+        "S3": 9.0,
+        "S2": 8.0,
+        "S1": 7.0,
+        "RSTO": 2.0,
+        "SH": 11.0,
+        "RSTRH": 5.0,
+        "SHR": 12.0
+    },
+    "duration": { "value": 7.091940960453829 },
+    "orig_bytes": { "value": 1250282618.8085754 },
+    "resp_bytes": { "value": 13.748081183550166 },
+    "detailed-label": {
+        "Attack": 0.0,
+        "Benign": 1.0,
+        "C&C": 2.0,
+        "C&C-FileDownload": 3.0,
+        "C&C-HeartBeat": 4.0,
+        "C&C-Torii": 5.0,
+        "DDoS": 6.0,
+        "FileDownload": 7.0,
+        "Okiru": 8.0,
+        "Okiru-Attack": 9.0,
+        "PartOfAHorizontalPortScan": 10.0
+    }
+}

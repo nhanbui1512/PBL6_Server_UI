@@ -7,7 +7,9 @@ const routes = require('./routes');
 const sendData = require('./app/controllers/dataController');
 
 const app = express();
+
 const server = require('http').createServer(app);
+
 const wss = new Websocket.Server({ server: server });
 
 // data from file csv
@@ -17,6 +19,8 @@ var result = [];
 
 // config websocket
 wss.on('connection', (ws, req) => {
+    console.log('client connected');
+
     var intervalID;
     fs.createReadStream('./data_test.csv') // read data from file .csv
         .pipe(parse({ delimiter: ',', from_line: 2 }))
@@ -73,5 +77,3 @@ routes(app);
 server.listen(3000, () => {
     console.log(`server is listening in port 3000`);
 });
-
-module.exports = wss;
