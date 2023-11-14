@@ -3,18 +3,37 @@ const Websocket = require('ws');
 const path = require('path');
 const hbs = require('express-handlebars');
 const fs = require('fs');
+const { parse } = require('csv-parse');
 
 const routes = require('./routes');
+
+const requestAPI = require('./app/controllers/dataController');
 
 const app = express();
 const server = require('http').createServer(app);
 const wss = new Websocket.Server({ server: server });
+
 const clients = [];
+var result = [];
+
+fs.createReadStream('./data_test.csv') // read data from file .csv
+    .pipe(parse({ delimiter: ',', from_line: 2 }))
+    .on('data', function (row) {
+        result.push(row);
+    })
+    .on('error', function (error) {
+        console.log(error.message);
+    })
+    .on('end', function () {
+        let i = 0;
+    });
 
 // Hàm gửi dữ liệu đến tất cả các client
 function broadcastData(data) {
     clients.map((client) => {
-        client.send(data);
+        if (client.readyState === Websocket.OPEN) {
+            client.send(data);
+        }
     });
 }
 
@@ -35,11 +54,38 @@ wss.on('connection', (socket) => {
     });
 });
 
+let i = 0;
 // Hàm setInterval để liên tục gửi dữ liệu đến tất cả các client
-setInterval(() => {
-    const currentTime = new Date().toLocaleTimeString();
-    const message = `Dữ liệu từ server: ${currentTime}`;
-    broadcastData(message);
+setInterval(async () => {
+    try {
+        const res = await requestAPI({
+            ts: result[i][1],
+            idresp_p: result[i][6],
+            idorig_p: result[i][4],
+            orig_ip_bytes: result[i][18],
+            resp_ip_bytes: result[i][20],
+            conn_state: result[i][12],
+            history: result[i][16],
+        });
+
+        broadcastData(
+            JSON.stringify({
+                ts: result[i][1],
+                idresp_p: result[i][6],
+                idorig_p: result[i][4],
+                orig_ip_bytes: result[i][18],
+                resp_ip_bytes: result[i][20],
+                conn_state: result[i][12],
+                history: result[i][16],
+                proto: result[i][7],
+                label: res.label,
+                id_label: res.id_label,
+            }),
+        );
+        i++;
+    } catch (error) {
+        console.log(error.message);
+    }
 }, 1000); // Gửi dữ liệu mỗi giây
 
 // config static files

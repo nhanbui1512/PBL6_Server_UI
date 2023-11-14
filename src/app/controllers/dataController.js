@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-async function sendRequestToServer({
+async function requestAPI({
     ts,
     idresp_p,
     idorig_p,
@@ -38,7 +38,7 @@ const sendData = (ws, data) => {
     let i = 0;
     return setInterval(async () => {
         try {
-            const res = await sendRequestToServer({
+            const res = await requestAPI({
                 ts: data[i][1],
                 idresp_p: data[i][6],
                 idorig_p: data[i][4],
@@ -69,4 +69,4 @@ const sendData = (ws, data) => {
     }, 1000);
 };
 
-module.exports = sendData;
+module.exports = requestAPI;
