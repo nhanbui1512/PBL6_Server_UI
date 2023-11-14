@@ -2,51 +2,45 @@ const express = require('express');
 const Websocket = require('ws');
 const path = require('path');
 const hbs = require('express-handlebars');
+const fs = require('fs');
 
 const routes = require('./routes');
-const sendData = require('./app/controllers/dataController');
 
 const app = express();
-
 const server = require('http').createServer(app);
-
 const wss = new Websocket.Server({ server: server });
+const clients = [];
 
-// data from file csv
-const fs = require('fs');
-const { parse } = require('csv-parse');
-var result = [];
-
-// config websocket
-wss.on('connection', (ws, req) => {
-    console.log('client connected');
-
-    var intervalID;
-    fs.createReadStream('./data_test.csv') // read data from file .csv
-        .pipe(parse({ delimiter: ',', from_line: 2 }))
-        .on('data', function (row) {
-            result.push(row);
-        })
-        .on('error', function (error) {
-            console.log(error.message);
-        })
-        .on('end', function () {
-            intervalID = sendData(ws, result);
-        });
-
-    ws.on('message', (message) => {
-        console.log(`received ${message}`);
-        ws.send('Got your message its' + message);
+// Hàm gửi dữ liệu đến tất cả các client
+function broadcastData(data) {
+    clients.map((client) => {
+        client.send(data);
     });
-    ws.on('close', () => {
-        console.log('disconnected');
-        clearInterval(intervalID);
+}
+
+// Xử lý khi có kết nối mới
+wss.on('connection', (socket) => {
+    console.log('Client đã kết nối.');
+
+    // Thêm kết nối mới vào danh sách
+    clients.push(socket);
+    // Xử lý khi kết nối bị đóng
+    socket.on('close', () => {
+        console.log('Kết nối đã đóng.');
+        // Xóa kết nối đó từ danh sách
+        const index = clients.indexOf(socket);
+        if (index !== -1) {
+            clients.splice(index, 1);
+        }
     });
 });
 
-wss.on('close', () => {
-    console.log('disconnected');
-});
+// Hàm setInterval để liên tục gửi dữ liệu đến tất cả các client
+setInterval(() => {
+    const currentTime = new Date().toLocaleTimeString();
+    const message = `Dữ liệu từ server: ${currentTime}`;
+    broadcastData(message);
+}, 1000); // Gửi dữ liệu mỗi giây
 
 // config static files
 app.use(express.static(path.join(__dirname, '/public')));

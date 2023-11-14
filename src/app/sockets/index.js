@@ -38,5 +38,3 @@ setInterval(() => {
     const message = `Dữ liệu từ server: ${currentTime}`;
     broadcastData(message);
 }, 1000); // Gửi dữ liệu mỗi giây
-
-module.exports = server;
