@@ -86,9 +86,17 @@ function reducer(state = samples, action) {
     switch (action.type) {
         case 'Search':
             let result = [];
+            const searchValue = action.searchValue;
             if (samples.length > 0) {
                 samples.map((item) => {
-                    if (item.proto === action.searchValue) {
+                    if (
+                        item.proto === searchValue ||
+                        item.ts.includes(searchValue) ||
+                        item.idresp_p === searchValue ||
+                        item.idorig_p === searchValue ||
+                        item.label.toLowerCase().includes(searchValue.toLowerCase()) ||
+                        item.conn_state.includes(searchValue)
+                    ) {
                         result.unshift(item);
                     }
                 });
