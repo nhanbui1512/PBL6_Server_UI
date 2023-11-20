@@ -1,4 +1,3 @@
-const user = require('../models/user');
 const User = require('../models/user');
 
 class LoginController {
@@ -11,15 +10,17 @@ class LoginController {
   async login(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
-
     try {
       const user = await User.findOne({ Email: email, Password: password });
       if (user) {
+        req.session.userId = user.id;
+        req.session.email = email;
+        req.session.authorize = 1;
         return res.status(200).json({ result: true, permission: 1 });
       }
       return res.status(200).json({ result: false });
     } catch (error) {
-      res.status(500);
+      return res.status(500);
     }
   }
 }
