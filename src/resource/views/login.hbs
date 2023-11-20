@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login</title>
+    <!-- Favicon icon -->
+    {{!-- <link rel="icon" type="image/png" sizes="16x16" href="/template/images/favicon.png"> --}}
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+    <link href="/template/css/style.css" rel="stylesheet">
+    <link rel="icon" href="/img/img/icons8-oak-tree-48.ico" type="image/x-icon" />
+</head>
+
+<body class="h-100">
+    
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+
+
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                <a class="text-center" href="index.html"> <h4>SIGN IN</h4></a>
+        
+                                <form class="mt-5 mb-5 login-input">
+                                    <div class="form-group">
+                                        <input id="input_email" name="email" type="text" class="form-control" placeholder="Email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="input_password" name="password" type="password" class="form-control" placeholder="Password" required>
+                                    </div>
+                                    <p id="login_fail" style="margin: 0; margin-bottom:10px; text-align: center; color: rgb(255, 65, 65); display: none;">Email hoặc Mật Khẩu không đúng</p>
+                                    <div id="login_btn" class="btn login-form__btn submit w-100">Sign In</div>
+                                </form>
+                                <p class="mt-5 login-form__footer">Dont have account? <a href="/register" class="text-primary">Sign Up</a> now</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var loginBtn = document.getElementById('login_btn')
+        var inputEmail = document.getElementById('input_email')
+        var inputPassWord = document.getElementById('input_password')
+        var loginFail = document.getElementById('login_fail')
+
+        function HandleLogin (){
+            
+            http.open('POST','/login/checklogin')
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            http.send('email='+inputEmail.value+'&password='+inputPassWord.value)
+
+            http.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    var response = JSON.parse(this.responseText)
+                    if(response.result == true){
+                       window.location.href = "/"
+                    }
+                    else{
+                        loginFail.style.display = 'block'
+                    }
+                }
+            }
+        }
+    
+        var http = new XMLHttpRequest();
+        loginBtn.addEventListener('click',HandleLogin)
+
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                HandleLogin()
+            }
+        });
+
+        inputPassWord.addEventListener('input',function(){
+            loginFail.style.display = 'none'
+        })
+
+    </script>
+    
+
+    
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="/template/plugins/common/common.min.js"></script>
+    <script src="/template/js/custom.min.js"></script>
+    <script src="/template/js/settings.js"></script>
+    <script src="/template/js/gleek.js"></script>
+    <script src="/template/js/styleSwitcher.js"></script>
+</body>
+</html>
+
+
+
+
+
