@@ -12,7 +12,7 @@ const requestAPI = require('./app/controllers/dataController');
 const app = express();
 const server = require('http').createServer(app);
 const wss = new Websocket.Server({ server: server });
-
+const getCurrentTime = require('./app/services');
 const clients = [];
 var result = [];
 
@@ -68,8 +68,10 @@ setInterval(async () => {
             history: result[i][16],
         });
 
+        const currentTime = getCurrentTime();
         broadcastData(
             JSON.stringify({
+                time: currentTime,
                 ts: result[i][1],
                 idresp_p: result[i][6],
                 idorig_p: result[i][4],

@@ -44,42 +44,45 @@ const createRow = (data) => {
             colorLabel = 'gradient-9';
             break;
     }
-    return `<tr class='${colorRow}'> <td>${data.ts}</td> <td> ${data.idresp_p} </td> <td>${data.idorig_p}</td><td>${data.orig_ip_bytes}</td>  <td>${data.conn_state}</td><td>${data.proto}</td>   <td>${data.resp_ip_bytes}</td>   <td><span class="label ${colorLabel} btn-rounded" >${data.label}</span> </td> </tr>`;
+    return `<tr class='${colorRow}'><td>${data.time}</td> <td>${data.ts}</td> <td> ${data.idresp_p} </td> <td>${data.idorig_p}</td><td>${data.orig_ip_bytes}</td>  <td>${data.conn_state}</td><td>${data.proto}</td>   <td>${data.resp_ip_bytes}</td>   <td><span class="label ${colorLabel} btn-rounded" >${data.label}</span> </td> </tr>`;
 };
 let samples = [
-    {
-        ts: '1545466932.337732',
-        idresp_p: 6667,
-        idorig_p: 54582,
-        orig_ip_bytes: 60,
-        conn_state: 'S0',
-        proto: 'tcp',
-        resp_ip_bytes: 563,
-        id_label: 1,
-        label: 'Benign',
-    },
-    {
-        ts: '1545466932.337732',
-        idresp_p: 6667,
-        idorig_p: 54582,
-        orig_ip_bytes: 60,
-        conn_state: 'S0',
-        proto: 'udp',
-        resp_ip_bytes: 563,
-        id_label: 4,
-        label: 'Benign',
-    },
-    {
-        ts: '1545466932.337732',
-        idresp_p: 6667,
-        idorig_p: 54582,
-        orig_ip_bytes: 60,
-        conn_state: 'S0',
-        proto: 'tcp',
-        resp_ip_bytes: 563,
-        id_label: 6,
-        label: 'Benign',
-    },
+    // {
+    //     time: '8:00 20/11/2023',
+    //     ts: '1545466932.337732',
+    //     idresp_p: 6667,
+    //     idorig_p: 54582,
+    //     orig_ip_bytes: 60,
+    //     conn_state: 'S0',
+    //     proto: 'tcp',
+    //     resp_ip_bytes: 563,
+    //     id_label: 1,
+    //     label: 'Benign',
+    // },
+    // {
+    //     time: '8:00 20/11/2023',
+    //     ts: '1545466932.337732',
+    //     idresp_p: 6667,
+    //     idorig_p: 54582,
+    //     orig_ip_bytes: 60,
+    //     conn_state: 'S0',
+    //     proto: 'udp',
+    //     resp_ip_bytes: 563,
+    //     id_label: 4,
+    //     label: 'Benign',
+    // },
+    // {
+    //     time: '8:00 20/11/2023',
+    //     ts: '1545466932.337732',
+    //     idresp_p: 6667,
+    //     idorig_p: 54582,
+    //     orig_ip_bytes: 60,
+    //     conn_state: 'S0',
+    //     proto: 'tcp',
+    //     resp_ip_bytes: 563,
+    //     id_label: 6,
+    //     label: 'Benign',
+    // },
 ];
 
 function reducer(state = samples, action) {
@@ -164,3 +167,61 @@ function connectWS() {
 }
 
 var connection = connectWS();
+console.log(samples);
+
+function convertData(data) {
+    const result = [
+        [
+            'time',
+            'ts',
+            'resp_ip_bytes',
+            'orig_ip_bytes',
+            'idresp_p',
+            'idorig_p',
+            'conn_state',
+            'proto',
+            'label',
+        ],
+    ];
+    data.map((item) => {
+        result.push([
+            item.time,
+            item.ts,
+            item.resp_ip_bytes,
+            item.orig_ip_bytes,
+            item.idresp_p,
+            item.idorig_p,
+            item.conn_state,
+            item.proto,
+            item.label,
+        ]);
+    });
+
+    return result;
+}
+
+function convertToCSV(data) {
+    // Chuẩn bị dữ liệu CSV
+    const csvContent = 'data:text/csv;charset=utf-8,' + data.map((row) => row.join(',')).join('\n');
+
+    // Tạo đối tượng URL
+    const encodedUri = encodeURI(csvContent);
+
+    // Tạo phần tử <a> để tải về
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'exported_data.csv');
+
+    // Thêm phần tử vào DOM và kích hoạt sự kiện click để tải về
+    document.body.appendChild(link);
+    link.click();
+
+    // Loại bỏ phần tử <a> sau khi đã sử dụng
+    document.body.removeChild(link);
+}
+
+const downloadBtn = document.getElementById('download-btn');
+
+downloadBtn.addEventListener('click', () => {
+    convertToCSV(convertData(samples));
+});

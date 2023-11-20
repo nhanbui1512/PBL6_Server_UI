@@ -9,7 +9,7 @@
         <link rel='icon' type='image/png' sizes='16x16' href='/template/images/favicon.png' />
         <!-- Custom Stylesheet -->
         <link href='/template/css/style.css' rel='stylesheet' />
-
+        
     </head>
 
     <body>
@@ -47,6 +47,8 @@
                                     <input type='text' class='form-control' placeholder='Search' />
                                 </form>
                             </div>
+
+                            <button id="download-btn" style="margin-left: 50px;" type="button" class="btn mb-1 btn-rounded btn-warning"><span class="btn-icon-left"><i class="fa fa-download color-warning"></i> </span>Save to CSV</button>
                         </div>
                     </div>
                 </div>
@@ -63,6 +65,7 @@
                                         <table  class='table table-bordered verticle-middle'>
                                             <thead>
                                                 <tr>
+                                                    <th scope='col'>time</th>
                                                     <th scope='col'>ts</th>
                                                     <th scope='col'>id.resp_p</th>
                                                     <th scope='col'>id.orig_p</th>
@@ -75,6 +78,7 @@
                                             </thead>
                                             <tbody id="table">
                                                 <tr class='table-active'>
+                                                    <td>1545466932.337732</td>
                                                     <td>1545466932.337732</td>
                                                     <td>
                                                         6667
@@ -276,7 +280,7 @@
         </script>
 
         <script type="module" src="/js/main.js"></script>
-
+        <script src="/js/downloadFile.js"></script>
     </body>
 
 </html>
