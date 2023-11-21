@@ -7,6 +7,7 @@ router.get('/password', adminController.password);
 router.get('/list-user', adminController.listUser);
 router.get('/create-account', adminController.createAccountView);
 router.get('/detail-user/:id', adminController.detailUser);
+router.get('/delete-user', adminController.deleteUser);
 router.get('/', adminController.index);
 
 router.post('/change-password', adminController.changePassWord);

@@ -25,7 +25,7 @@
                           <td>{{this.Address}}</td>
                           <td>{{this.PhoneNumber}}</td>
                           <td>{{this.Permission.name}}</td>
-                          <td><span><a href="/admin/detail-user/{{this._id}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a><a href="#" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a></span>
+                          <td><span><a href="/admin/detail-user/{{this._id}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a><a href="/admin/delete-user?id={{this._id}}" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a></span>
                           </td>
                       </tr>
                     {{/each}}

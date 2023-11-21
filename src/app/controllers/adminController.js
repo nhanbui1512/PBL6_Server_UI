@@ -9,7 +9,7 @@ class AdminController {
   }
 
   async listUser(req, res) {
-    const users = multipleMongooseToObject(await User.find());
+    const users = multipleMongooseToObject(await User.find({ _id: { $ne: req.session.userId } }));
     return res.render('admin/listUser.hbs', {
       layout: 'adminLayout.hbs',
       data: users,
@@ -106,18 +106,17 @@ class AdminController {
       PhoneNumber: req.body.PhoneNumber,
     };
 
-    console.log(data);
     try {
       const user = await User.findById(userId);
       if (user.toObject() === null) {
         throw new Error('not found user');
       }
 
-      // user.UserName = data.UserName;
-      // user.Address = data.Addresss;
-      // user.PhoneNumber = data.PhoneNumber;
+      user.UserName = data.UserName;
+      user.Address = data.Addresss;
+      user.PhoneNumber = data.PhoneNumber;
 
-      // await user.save();
+      await user.save();
       return res.redirect('/admin/list-user');
     } catch (error) {
       console.log(error.message);
@@ -140,7 +139,23 @@ class AdminController {
       return res.redirect('/admin/profile');
     } catch (error) {
       console.log(error.message);
-      res.send(`Error ${error.message}`);
+      res.render('error.hbs', { layout: false });
+    }
+  }
+
+  async deleteUser(req, res) {
+    const userid = req.query.id;
+    const user = await User.findById(userid);
+
+    try {
+      if (user.toObject() === null) {
+        return res.redirect('/admin/list-user');
+      }
+
+      await user.deleteOne();
+      return res.redirect('/admin/list-user');
+    } catch (error) {
+      return res.render('error', { layout: false });
     }
   }
 }
