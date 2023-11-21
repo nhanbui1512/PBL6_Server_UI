@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { multipleMongooseToObject } = require('../../untils/mongoose');
+const { multipleMongooseToObject, mongooseToObject } = require('../../untils/mongoose');
 
 class AdminController {
   async index(req, res) {
@@ -7,21 +7,27 @@ class AdminController {
       layout: 'adminLayout.hbs',
     });
   }
-  async detailUser(req, res) {
-    const id = req.params.id;
-    console.log(id);
-
-    res.render('admin/detailUser.hbs', {
-      layout: 'adminLayout.hbs',
-    });
-  }
 
   async listUser(req, res) {
     const users = multipleMongooseToObject(await User.find());
-    console.log(users);
     return res.render('admin/listUser.hbs', {
       layout: 'adminLayout.hbs',
+      data: users,
     });
+  }
+
+  async detailUser(req, res) {
+    const id = req.params.id;
+    const user = mongooseToObject(await User.findById(id));
+
+    if (user) {
+      return res.render('admin/detailUser.hbs', {
+        layout: 'adminLayout.hbs',
+        data: user,
+      });
+    }
+
+    return res.redirect('/admin/list-user');
   }
 
   async password(req, res) {
@@ -38,6 +44,29 @@ class AdminController {
     return res.render('admin/createAccount.hbs', {
       layout: 'adminLayout.hbs',
     });
+  }
+
+  async changePassWord(req, res) {
+    const oldPassWord = req.body.oldpass;
+    const newPassWord = req.body.newpass;
+    const UserID = req.session.userId;
+
+    try {
+      const user = await User.findById(UserID);
+      if (user) {
+        if (oldPassWord == user.Password) {
+          user.Password = newPassWord;
+          await user.save();
+          return res.status(200).json({ result: true });
+        } else {
+          return res.status(200).json({ result: false });
+        }
+      } else {
+        return res.status(200).json({ result: false });
+      }
+    } catch (error) {
+      return res.status(200).json({ result: false });
+    }
   }
 }
 

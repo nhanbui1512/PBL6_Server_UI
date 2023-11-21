@@ -7,6 +7,8 @@ router.get('/password', adminController.password);
 router.get('/list-user', adminController.listUser);
 router.get('/create-account', adminController.createAccount);
 router.get('/detail-user/:id', adminController.detailUser);
-
 router.get('/', adminController.index);
+
+router.post('/change-password', adminController.changePassWord);
+
 module.exports = router;

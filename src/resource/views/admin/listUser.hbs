@@ -17,15 +17,19 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                          <td>Air Conditioner</td>
-                          <td>buithiennhan0345@gmail.com</td>
-                          <td>Da Nang</td>
-                          <td>0913946875</td>
-                          <td>Admin</td>
-                          <td><span><a href="/admin/detail-user/5" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a><a href="#" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a></span>
+
+                    {{#each data}}
+                        <tr>
+                          <td>{{this.UserName}}</td>
+                          <td>{{this.Email}}</td>
+                          <td>{{this.Address}}</td>
+                          <td>{{this.PhoneNumber}}</td>
+                          <td>{{this.Permission.name}}</td>
+                          <td><span><a href="/admin/detail-user/{{this._id}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-muted m-r-5"></i> </a><a href="#" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a></span>
                           </td>
                       </tr>
+                    {{/each}}
+                      
                   </tbody>
               </table>
           </div>
