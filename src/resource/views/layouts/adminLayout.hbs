@@ -10,8 +10,7 @@
     
     <!-- Custom Stylesheet -->
     <link href="/template/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="/font/fontawesome-free-6.1.2-web/css/all.css">
-    <link rel="icon" href="/img/img/icons8-oak-tree-48.ico" type="image/x-icon" />
+    <link rel="icon" href="/template/img/img/icons8-oak-tree-48.ico" type="image/x-icon" />
 </head>
 
 <body>
@@ -26,19 +25,10 @@
             </svg>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
 
-    
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
+     
         <div class="nav-header">
             <div class="brand-logo">
                 <a href="/admin">
@@ -50,13 +40,7 @@
                 </a>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-
-        <!--**********************************
-            Header start
-        ***********************************-->
+       
         <div class="header">    
             <div class="header-content clearfix">
                 
@@ -65,19 +49,30 @@
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
                     </div>
                 </div>
-                <div class="header-left">
-                    <div class="input-group icons">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
-                        </div>
-                        <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
-                        <div class="drop-down   d-md-none">
-							<form action="#">
-								<input type="text" class="form-control" placeholder="Search">
-							</form>
+                  <div class='header-left'>
+                        <div class='input-group icons'>
+                            <div class='input-group-prepend'>
+                                <span
+                                    class='input-group-text bg-transparent border-0 pr-2 pr-sm-3'
+                                    id='basic-addon1'
+                                ><i class='mdi mdi-magnify'></i></span>
+                            </div>
+                            <input
+                                id="search"
+                                type='search'
+                                class='form-control'
+                                placeholder='Search Dashboard'
+                                aria-label='Search Dashboard'
+                            />
+                            <div class='drop-down d-md-none'>
+                                <form action='#'>
+                                    <input type='text' class='form-control' placeholder='Search' />
+                                </form>
+                            </div>
+
+                            {{!-- <button id="download-btn" style="margin-left: 50px;" type="button" class="btn mb-1 btn-rounded btn-warning"><span class="btn-icon-left"><i class="fa fa-download color-warning"></i> </span>Save to CSV</button> --}}
                         </div>
                     </div>
-                </div>
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
@@ -192,7 +187,7 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="/uploads/{{avatar}}" height="40" width="40" alt="">
+                                <img src="/template/images/avatar/1.jpg" height="40" width="40" alt="">
                             </div>
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
@@ -217,13 +212,7 @@
                 </div>
             </div>
         </div>
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
+ 
         <div class="nk-sidebar" style="border-right: 1px solid #ddd">           
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
@@ -233,78 +222,29 @@
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Center</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/admin/danhsachttkd">Danh Sách TTKĐ</a></li>
-                            <li><a href="/admin/themttkd">Thêm TTKĐ</a></li>
-                            <li><a href="/admin/danhsachdonkd">Danh Sách Đơn Kiểm Định</a></li>
+                            <li><a href="/admin/list-user">User List</a></li>
+                            <li><a href="/admin/create-account">Create User</a></li>
                         </ul>
                     </li>
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Business</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="/admin/danhsachdoanhnghiep">Danh Sách Doanh Nghiệp</a></li>
-                            <li><a href="/admin/themdoanhnghiep">Thêm Doanh Nghiệp</a></li>
-                            <li><a href="/admin/themdonkiemdinh">Thêm Đơn Kiểm Định</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-graph menu-icon"></i> <span class="nav-text">Products</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="/admin/danhsachsanpham">Danh Sách Sản Phẩm</a></li>
-                            <li><a href="/admin/danhsachnguyenlieu">Danh Sách Nguyên Liệu</a></li> 
-                            <li><a href="/admin/quytrinhsanxuat">Danh Sách Quy Trình SX</a></li>   
-                            <li><a href="/admin/addmaterial">Thêm Nguyên Liệu</a></li>   
-                            <li><a href="/admin/themsanpham">Thêm Sản Phẩm</a></li>   
-                        </ul>
-                    </li>
+             
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
+  
         <div class="content-body">
 
           {{{body}}}
     
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        
-        
-        <!--**********************************
-            Footer start
-        ***********************************-->
-        {{!-- <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-            </div>
-        </div> --}}
-        <!--**********************************
-            Footer end
-        ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
+ 
     <script src="/template/plugins/common/common.min.js"></script>
     <script src="/template/js/custom.min.js"></script>
     <script src="/template/js/settings.js"></script>
     <script src="/template/js/gleek.js"></script>
     <script src="/template/js/styleSwitcher.js"></script>
 
+    <script type="module" src="/js/main.js"></script>
 
 </body>
 

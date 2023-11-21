@@ -1,0 +1,115 @@
+ <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="/admin/insertttkd">Thêm TT Kiểm Định</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Create User</h4>
+                                <div class="form-validation">
+                                    <form class="form-valide">
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="username">User Name<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input required type="text" class="form-control" id="username" name="UserName" placeholder="Enter a username..">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="email">Email <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input required type="text" class="form-control" id="email" name="Email" placeholder="Your valid email..">
+                                                <p id="fail_email" style="margin:5px 0px; color: red; display: none;">*Email đã tồn tại</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="password">Password <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input required type="password" class="form-control" id="password" name="Password" placeholder="Choose a safe one..">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="address">Address<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input required type="text" class="form-control" id="address" name="Address" placeholder="Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="phone">PhoneNumber<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input required type="text" class="form-control" id="phone" name="PhoneNumber" placeholder="054321...">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-lg-8 ml-auto">
+                                                <div id="submit_btn" class="btn btn-primary">Submit</div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <script>
+        var http = new XMLHttpRequest()
+
+        var failEmail = document.getElementById('fail_email')
+        var submitBtn = document.getElementById('submit_btn')
+
+
+        var inputUserName = document.getElementById('username')
+        var inputEmail = document.getElementById('email')
+        var inputPassWord = document.getElementById('password')
+        var inputAddress = document.getElementById('address')
+        var inputPhone = document.getElementById('phone')
+        
+
+        submitBtn.addEventListener('click', function(){
+            var valUserName = inputUserName.value
+            var valEmail = inputEmail.value
+            var valPassWord = inputPassWord.value
+            var valAddress = inputAddress.value
+            var valPhone = inputPhone.value
+
+            http.open('POST', 'http://localhost:3005/admin/insertttkd')
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            http.send('UserName='+valUserName+'&Email='+valEmail+'&Password='+valPassWord+'&Address='+valAddress+'&PhoneNumber='+valPhone)
+
+            http.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    var response = JSON.parse(this.responseText)
+                    if(response.result == true)
+                    {
+                        window.location.href = "http://localhost:3005/admin/danhsachttkd";
+                    }
+                    else{
+                        failEmail.style.display = 'block'
+                    }
+                }
+            }
+
+
+        })
+
+
+
+    </script>
