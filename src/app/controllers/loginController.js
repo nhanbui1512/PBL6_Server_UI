@@ -16,7 +16,7 @@ class LoginController {
         req.session.userId = user.id;
         req.session.email = email;
         req.session.authorize = user.Permission.id;
-        return res.status(200).json({ result: true, permission: 1 });
+        return res.status(200).json({ result: true, permission: user.Permission.name });
       }
       return res.status(200).json({ result: false });
     } catch (error) {

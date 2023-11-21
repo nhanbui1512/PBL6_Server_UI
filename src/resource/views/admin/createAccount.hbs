@@ -90,7 +90,7 @@
             var valAddress = inputAddress.value
             var valPhone = inputPhone.value
 
-            http.open('POST', 'http://localhost:3005/admin/insertttkd')
+            http.open('POST', '/admin/create-account')
             http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             http.send('UserName='+valUserName+'&Email='+valEmail+'&Password='+valPassWord+'&Address='+valAddress+'&PhoneNumber='+valPhone)
 
@@ -99,7 +99,7 @@
                     var response = JSON.parse(this.responseText)
                     if(response.result == true)
                     {
-                        window.location.href = "http://localhost:3005/admin/danhsachttkd";
+                        window.location.href = "/admin/list-user";
                     }
                     else{
                         failEmail.style.display = 'block'
