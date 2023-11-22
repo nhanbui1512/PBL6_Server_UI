@@ -12,7 +12,7 @@ const userMidleWare = require('../app/middlewares/user');
 function route(app) {
   app.use('/login', loginRouter);
   app.use('/admin', adminMidleWare, adminRouter);
-  app.use('/user', userMidleWare, userRouter);
+  app.use('/User', userMidleWare, userRouter);
   app.use('/logout', logoutRouter);
   app.use('/', isLoginMiddleWare, rootRouter);
 }
