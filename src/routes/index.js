@@ -2,6 +2,7 @@ const rootRouter = require('./rootRouter');
 const loginRouter = require('./loginRouter');
 const logoutRouter = require('./logoutRouter');
 const userRouter = require('./userRouter');
+const signUpRouter = require('./signup');
 
 const adminRouter = require('./adminRouter');
 
@@ -14,6 +15,7 @@ function route(app) {
   app.use('/admin', adminMidleWare, adminRouter);
   app.use('/User', userMidleWare, userRouter);
   app.use('/logout', logoutRouter);
+  app.use('/signup', signUpRouter);
   app.use('/', isLoginMiddleWare, rootRouter);
 }
 

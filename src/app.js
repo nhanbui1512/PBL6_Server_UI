@@ -62,39 +62,39 @@ wss.on('connection', (socket) => {
 let i = 0;
 // Hàm setInterval để liên tục gửi dữ liệu đến tất cả các client
 
-setInterval(async () => {
-  try {
-    const res = await requestAPI({
-      ts: result[i][1],
-      idresp_p: result[i][6],
-      idorig_p: result[i][4],
-      orig_ip_bytes: result[i][18],
-      resp_ip_bytes: result[i][20],
-      conn_state: result[i][12],
-      history: result[i][16],
-    });
+// setInterval(async () => {
+//   try {
+//     const res = await requestAPI({
+//       ts: result[i][1],
+//       idresp_p: result[i][6],
+//       idorig_p: result[i][4],
+//       orig_ip_bytes: result[i][18],
+//       resp_ip_bytes: result[i][20],
+//       conn_state: result[i][12],
+//       history: result[i][16],
+//     });
 
-    const currentTime = getCurrentTime();
-    broadcastData(
-      JSON.stringify({
-        time: currentTime,
-        ts: result[i][1],
-        idresp_p: result[i][6],
-        idorig_p: result[i][4],
-        orig_ip_bytes: result[i][18],
-        resp_ip_bytes: result[i][20],
-        conn_state: result[i][12],
-        history: result[i][16],
-        proto: result[i][7],
-        label: res.label,
-        id_label: res.id_label,
-      }),
-    );
-    i++;
-  } catch (error) {
-    console.log(error.message);
-  }
-}, 1000); // Gửi dữ liệu mỗi giây
+//     const currentTime = getCurrentTime();
+//     broadcastData(
+//       JSON.stringify({
+//         time: currentTime,
+//         ts: result[i][1],
+//         idresp_p: result[i][6],
+//         idorig_p: result[i][4],
+//         orig_ip_bytes: result[i][18],
+//         resp_ip_bytes: result[i][20],
+//         conn_state: result[i][12],
+//         history: result[i][16],
+//         proto: result[i][7],
+//         label: res.label,
+//         id_label: res.id_label,
+//       }),
+//     );
+//     i++;
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }, 1000); // Gửi dữ liệu mỗi giây
 
 // config static files
 app.use(express.static(path.join(__dirname, '/public')));
